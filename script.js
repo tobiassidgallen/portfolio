@@ -1,4 +1,3 @@
-
 // DOM Elements
 const menuBtn = document.querySelector('.menu-btn');
 const navLinks = document.querySelector('.nav-links');
@@ -193,4 +192,37 @@ document.addEventListener('DOMContentLoaded', () => {
 // Add loading animation
 window.addEventListener('load', () => {
     document.body.classList.add('loaded');
+});
+
+// Handle tooltips for mobile
+document.addEventListener('DOMContentLoaded', function() {
+  const skillItems = document.querySelectorAll('.skill-item');
+  
+  // Close any open tooltips when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.skill-item')) {
+      skillItems.forEach(item => item.classList.remove('active'));
+    }
+  });
+  
+  // Toggle tooltips on mobile
+  skillItems.forEach(item => {
+    item.addEventListener('click', function(e) {
+      // Don't toggle if it's a desktop device
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        return;
+      }
+      
+      // Close other tooltips
+      skillItems.forEach(otherItem => {
+        if (otherItem !== item) {
+          otherItem.classList.remove('active');
+        }
+      });
+      
+      // Toggle current tooltip
+      this.classList.toggle('active');
+      e.stopPropagation();
+    });
+  });
 });
